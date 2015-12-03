@@ -12,7 +12,7 @@
 #define THPP_STORAGE_H_
 
 #include <thpp/detail/Storage.h>
-#include <thpp/if/gen-cpp2/Tensor_types.h>
+//#include <thpp/if/gen-cpp2/Tensor_types.h>
 #include <folly/Malloc.h>
 #include <folly/Range.h>
 #include <folly/io/IOBuf.h>
@@ -64,7 +64,7 @@ class Storage {
   explicit Storage(folly::IOBuf& iob) : Storage(*iob.clone()) { }
 
   // Deserialize from Thrift. Throws if wrong type.
-  explicit Storage(ThriftStorage&& thriftStorage);
+  //explicit Storage(ThriftStorage&& thriftStorage);
 
   // Takes ownership of a range allocated with malloc() (NOT new or new[]!)
   static Storage takeOwnership(Range<T*> data);
@@ -119,10 +119,10 @@ class Storage {
   folly::IOBuf getIOBuf();
 
   // Serialize to Thrift.
-  void serialize(ThriftStorage& out,
-                 ThriftTensorEndianness endianness =
-                     ThriftTensorEndianness::NATIVE,
-                 bool mayShare = true) const;
+  //void serialize(ThriftStorage& out,
+  //               ThriftTensorEndianness endianness =
+  //                   ThriftTensorEndianness::NATIVE,
+  //               bool mayShare = true) const;
 
   static constexpr const char* kLuaTypeName = Ops::kLuaTypeName;
 
@@ -169,7 +169,7 @@ class THAllocatorWrapper {
 
 }  // namespaces
 
-#include <thpp/StorageSerialization-inl.h>
+//#include <thpp/StorageSerialization-inl.h>
 #include <thpp/Storage-inl.h>
 
 #endif /* THPP_STORAGE_H_ */

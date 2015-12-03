@@ -17,7 +17,7 @@
 
 #include <thpp/Storage.h>
 #include <thpp/detail/Tensor.h>
-#include <thpp/if/gen-cpp2/Tensor_types.h>
+//#include <thpp/if/gen-cpp2/Tensor_types.h>
 #include <folly/Range.h>
 #include <folly/io/IOBuf.h>
 
@@ -90,7 +90,7 @@ class Tensor {
       std::initializer_list<long> strides = std::initializer_list<long>());
 
   // Deserialize from Thrift. Throws if wrong type.
-  explicit Tensor(ThriftTensor&& thriftTensor);
+  //explicit Tensor(ThriftTensor&& thriftTensor);
 
   // Destructor
   ~Tensor();
@@ -132,17 +132,17 @@ class Tensor {
   // Serialize to Thrift. Non-const because the resulting ThriftTensor
   // may share memory with *this, and so changes in the ThriftTensor may
   // affect changes in *this.
-  void serialize(ThriftTensor& out,
-                 ThriftTensorEndianness endianness =
-                    ThriftTensorEndianness::NATIVE,
-                 bool mayShare = true);
+  //void serialize(ThriftTensor& out,
+  //               ThriftTensorEndianness endianness =
+  //                  ThriftTensorEndianness::NATIVE,
+  //               bool mayShare = true);
 
   // const version that won't share, but will always copy
-  void serializeUnshared(ThriftTensor& out,
-                         ThriftTensorEndianness endianness =
-                            ThriftTensorEndianness::NATIVE) const {
-    const_cast<Tensor*>(this)->serialize(out, endianness, false);
-  }
+  //void serializeUnshared(ThriftTensor& out,
+  //                       ThriftTensorEndianness endianness =
+  //                          ThriftTensorEndianness::NATIVE) const {
+  //  const_cast<Tensor*>(this)->serialize(out, endianness, false);
+  //}
 
   // Get a pointer to the underlying TH object; *this releases ownership
   // of that object.
@@ -468,7 +468,7 @@ std::ostream& operator<<(std::ostream& s, const Tensor<T>& t) {
 
 }  // namespaces
 
-#include <thpp/TensorSerialization-inl.h>
+//#include <thpp/TensorSerialization-inl.h>
 #include <thpp/Tensor-inl.h>
 
 #endif /* THPP_TENSOR_H_ */

@@ -61,18 +61,18 @@ Tensor<T>::Tensor(const std::vector<long>& sizes,
     : Tensor(LongStorage(sizes.begin(), sizes.end()),
              LongStorage(strides.begin(), strides.end())) { }
 
-template <class T>
-Tensor<T>::Tensor(ThriftTensor&& thriftTensor) : t_(nullptr) {
-  auto buf = detail::deserialize(std::move(thriftTensor),
-                                 detail::dataType<T>());
-  Storage<T> data(std::move(buf));
-
-  LongStorage s(LongStorage::wrap(makeMutable(LongRange(
-      thriftTensor.sizes.data(), thriftTensor.sizes.size()))));
-
-  t_ = Ops::_newWithStorage(data.th(), 0, s.th(), nullptr);
-  DCHECK_EQ(data.size(), size());
-}
+//template <class T>
+//Tensor<T>::Tensor(ThriftTensor&& thriftTensor) : t_(nullptr) {
+//  auto buf = detail::deserialize(std::move(thriftTensor),
+//                                 detail::dataType<T>());
+//  Storage<T> data(std::move(buf));
+//
+//  LongStorage s(LongStorage::wrap(makeMutable(LongRange(
+//      thriftTensor.sizes.data(), thriftTensor.sizes.size()))));
+//
+//  t_ = Ops::_newWithStorage(data.th(), 0, s.th(), nullptr);
+//  DCHECK_EQ(data.size(), size());
+//}
 
 template <class T>
 Tensor<T>::~Tensor() {
@@ -165,22 +165,22 @@ auto Tensor<T>::moveAsTH() -> THType* {
   return out;
 }
 
-template <class T>
-void Tensor<T>::serialize(ThriftTensor& out,
-                          ThriftTensorEndianness endianness,
-                          bool mayShare) {
-  auto buf = Storage<T>(Ops::_storage(t_)).getIOBuf();
-  buf.trimStart(Ops::_storageOffset(t_) * sizeof(T));
-  detail::serialize(
-      out,
-      sizes(),
-      strides(),
-      std::move(buf),
-      detail::dataType<T>(),
-      sizeof(T),
-      endianness,
-      mayShare);
-}
+//template <class T>
+//void Tensor<T>::serialize(ThriftTensor& out,
+//                          ThriftTensorEndianness endianness,
+//                          bool mayShare) {
+//  auto buf = Storage<T>(Ops::_storage(t_)).getIOBuf();
+//  buf.trimStart(Ops::_storageOffset(t_) * sizeof(T));
+//  detail::serialize(
+//      out,
+//      sizes(),
+//      strides(),
+//      std::move(buf),
+//      detail::dataType<T>(),
+//      sizeof(T),
+//      endianness,
+//      mayShare);
+//}
 
 template <class T>
 void Tensor<T>::force(unsigned newMode) {

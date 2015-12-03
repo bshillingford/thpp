@@ -272,10 +272,10 @@ Storage<T>::Storage(folly::IOBuf&& iob) : t_(nullptr) {
   setFromIOBuf(std::move(iob));
 }
 
-template <class T>
-Storage<T>::Storage(ThriftStorage&& in) : t_(nullptr) {
-  setFromIOBuf(detail::deserialize(std::move(in), detail::dataType<T>()));
-}
+//template <class T>
+//Storage<T>::Storage(ThriftStorage&& in) : t_(nullptr) {
+//  setFromIOBuf(detail::deserialize(std::move(in), detail::dataType<T>()));
+//}
 
 template <class T>
 void Storage<T>::setFromIOBuf(folly::IOBuf&& iob) {
@@ -293,13 +293,13 @@ void Storage<T>::setFromIOBuf(folly::IOBuf&& iob) {
       new detail::IOBufAllocator(std::move(iob)));
 }
 
-template <class T>
-void Storage<T>::serialize(ThriftStorage& out,
-                           ThriftTensorEndianness endianness,
-                           bool mayShare) const {
-  detail::serialize(out, const_cast<Storage*>(this)->getIOBuf(),
-                    detail::dataType<T>(), endianness, mayShare);
-}
+//template <class T>
+//void Storage<T>::serialize(ThriftStorage& out,
+//                           ThriftTensorEndianness endianness,
+//                           bool mayShare) const {
+//  detail::serialize(out, const_cast<Storage*>(this)->getIOBuf(),
+//                    detail::dataType<T>(), endianness, mayShare);
+//}
 
 template <class T>
 auto Storage<T>::moveAsTH() -> THType* {

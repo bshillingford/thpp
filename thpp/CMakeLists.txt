@@ -24,14 +24,14 @@ MLI_SET_DEPTH(1)
 FIND_PACKAGE(Folly REQUIRED)
 FIND_PACKAGE(Glog REQUIRED)
 FIND_PACKAGE(Torch REQUIRED)
-FIND_PACKAGE(Thrift REQUIRED)
+#FIND_PACKAGE(Thrift REQUIRED)
 INCLUDE_DIRECTORIES(
   ${FOLLY_INCLUDE_DIR}
   ${GLOG_INCLUDE_DIR}
-  ${THRIFT_INCLUDE_DIR}
+  #${THRIFT_INCLUDE_DIR}
 )
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -v")
 
 ADD_SUBDIRECTORY("gtest-1.7.0")
 INCLUDE_DIRECTORIES(
@@ -40,19 +40,19 @@ INCLUDE_DIRECTORIES(
 
 SET(src
   Storage.cpp
-  StorageSerialization.cpp
+  #StorageSerialization.cpp
   detail/StorageDefs.cpp
-  TensorSerialization.cpp
+  #TensorSerialization.cpp
   detail/TensorDefs.cpp
 )
 
 SET(h
   Storage.h
   Storage-inl.h
-  StorageSerialization-inl.h
+  #StorageSerialization-inl.h
   Tensor.h
   Tensor-inl.h
-  TensorSerialization-inl.h
+  #TensorSerialization-inl.h
 )
 
 SET(h_detail
@@ -62,16 +62,16 @@ SET(h_detail
   detail/TensorGeneric.h
 )
 
-ADD_THRIFT2(src "if/Tensor.thrift")
+#ADD_THRIFT2(src "if/Tensor.thrift")
 
 ADD_LIBRARY(thpp SHARED ${src})
 
 # This is a template library, so some dependent libraries are only used from
 # header files, so we'd like to force them to be linked.
-SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-as-needed")
+SET(CMAKE_SHARED_LINKER_FLAGS "-Wl") #,--no-as-needed")
 
 TARGET_LINK_LIBRARIES(thpp
-  TH ${FOLLY_LIBRARIES} ${GLOG_LIBRARIES} ${THRIFT_LIBRARIES})
+  TH ${FOLLY_LIBRARIES} ${GLOG_LIBRARIES}) # ${THRIFT_LIBRARIES})
 
 ADD_SUBDIRECTORY("test")
 
@@ -86,4 +86,4 @@ INSTALL(FILES ${h}
   DESTINATION "include/${MLI_INCLUDE_RELATIVE_OUTPUT_DIR}")
 INSTALL(FILES ${h_detail}
   DESTINATION "include/${MLI_INCLUDE_RELATIVE_OUTPUT_DIR}/detail")
-INSTALL_THRIFT2_HEADERS("if" "include")
+#INSTALL_THRIFT2_HEADERS("if" "include")
